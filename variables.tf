@@ -171,18 +171,6 @@ variable "log_publishing_index_enabled" {
   description = "Specifies whether log publishing option for INDEX_SLOW_LOGS is enabled or not"
 }
 
-variable "log_publishing_search_enabled" {
-  type        = bool
-  default     = false
-  description = "Specifies whether log publishing option for SEARCH_SLOW_LOGS is enabled or not"
-}
-
-variable "log_publishing_application_enabled" {
-  type        = bool
-  default     = false
-  description = "Specifies whether log publishing option for ES_APPLICATION_LOGS is enabled or not"
-}
-
 variable "log_publishing_index_cloudwatch_log_group_arn" {
   type        = string
   default     = ""
@@ -233,13 +221,13 @@ variable "advanced_options" {
 
 variable "elasticsearch_subdomain_name" {
   type        = string
-  default     = ""
+  default     = "es"
   description = "The name of the subdomain for Elasticsearch in the DNS zone (_e.g._ `elasticsearch`, `ui`, `ui-es`, `search-ui`)"
 }
 
 variable "kibana_subdomain_name" {
   type        = string
-  default     = ""
+  default     = "kibana"
   description = "The name of the subdomain for Kibana in the DNS zone (_e.g._ `kibana`, `ui`, `ui-es`, `search-ui`, `kibana.elasticsearch`)"
 }
 
@@ -259,12 +247,6 @@ variable "iam_role_max_session_duration" {
   type        = number
   default     = 3600
   description = "The maximum session duration (in seconds) for the user role. Can have a value from 1 hour to 12 hours"
-}
-
-variable "cognito_authentication_enabled" {
-  type        = bool
-  default     = false
-  description = "Whether to enable Amazon Cognito authentication with Kibana"
 }
 
 variable "cognito_user_pool_id" {

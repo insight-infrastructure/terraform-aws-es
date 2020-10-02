@@ -15,7 +15,9 @@ For Terraform v0.12.0+
 
 ```hcl
 module "this" {
-  source = "github.com/insight-infrastructure/terraform-aws-es"
+  source 	  = "github.com/insight-infrastructure/terraform-aws-es"
+  id          = "es" # random identifier
+  domain_name = "insight-infra.net"
 }
 ```
 ## Examples
@@ -48,7 +50,6 @@ No issue is creating limit on this module.
 | automated\_snapshot\_start\_hour | Hour at which automated snapshots are taken, in UTC | `number` | `0` | no |
 | availability\_zone\_count | Number of Availability Zones for the domain to use. | `number` | `2` | no |
 | aws\_ec2\_service\_name | AWS EC2 Service Name | `list(string)` | <pre>[<br>  "ec2.amazonaws.com"<br>]</pre> | no |
-| cognito\_authentication\_enabled | Whether to enable Amazon Cognito authentication with Kibana | `bool` | `false` | no |
 | cognito\_iam\_role\_arn | ARN of the IAM role that has the AmazonESCognitoAccess policy attached | `string` | `""` | no |
 | cognito\_identity\_pool\_id | The ID of the Cognito Identity Pool to use | `string` | `""` | no |
 | cognito\_user\_pool\_id | The ID of the Cognito User Pool to use | `string` | `""` | no |
@@ -63,7 +64,7 @@ No issue is creating limit on this module.
 | ebs\_iops | The baseline input/output (I/O) performance of EBS volumes attached to data nodes. Applicable only for the Provisioned IOPS EBS volume type | `number` | `0` | no |
 | ebs\_volume\_size | EBS volumes for data storage in GB | `number` | `10` | no |
 | ebs\_volume\_type | Storage type of EBS volumes | `string` | `"gp2"` | no |
-| elasticsearch\_subdomain\_name | The name of the subdomain for Elasticsearch in the DNS zone (\_e.g._ `elasticsearch`, `ui`, `ui-es`, `search-ui`) | `string` | `""` | no |
+| elasticsearch\_subdomain\_name | The name of the subdomain for Elasticsearch in the DNS zone (\_e.g._ `elasticsearch`, `ui`, `ui-es`, `search-ui`) | `string` | `"es"` | no |
 | elasticsearch\_version | Version of Elasticsearch to deploy (\_e.g._ `7.4`, `7.1`, `6.8`, `6.7`, `6.5`, `6.4`, `6.3`, `6.2`, `6.0`, `5.6`, `5.5`, `5.3`, `5.1`, `2.3`, `1.5` | `string` | `"7.4"` | no |
 | encrypt\_at\_rest\_enabled | Whether to enable encryption at rest | `bool` | `true` | no |
 | encrypt\_at\_rest\_kms\_key\_id | The KMS key ID to encrypt the Elasticsearch domain with. If not specified, then it defaults to using the AWS/Elasticsearch service KMS key | `string` | `""` | no |
@@ -75,13 +76,11 @@ No issue is creating limit on this module.
 | instance\_count | Number of data nodes in the cluster | `number` | `4` | no |
 | instance\_type | Elasticsearch instance type for data nodes in the cluster | `string` | `"t3.small.elasticsearch"` | no |
 | kibana\_hostname\_enabled | Explicit flag to enable creating a DNS hostname for Kibana. If `true`, then `var.dns_zone_id` is required. | `bool` | `false` | no |
-| kibana\_subdomain\_name | The name of the subdomain for Kibana in the DNS zone (\_e.g._ `kibana`, `ui`, `ui-es`, `search-ui`, `kibana.elasticsearch`) | `string` | `""` | no |
+| kibana\_subdomain\_name | The name of the subdomain for Kibana in the DNS zone (\_e.g._ `kibana`, `ui`, `ui-es`, `search-ui`, `kibana.elasticsearch`) | `string` | `"kibana"` | no |
 | log\_publishing\_application\_cloudwatch\_log\_group\_arn | ARN of the CloudWatch log group to which log for ES\_APPLICATION\_LOGS needs to be published | `string` | `""` | no |
-| log\_publishing\_application\_enabled | Specifies whether log publishing option for ES\_APPLICATION\_LOGS is enabled or not | `bool` | `false` | no |
 | log\_publishing\_index\_cloudwatch\_log\_group\_arn | ARN of the CloudWatch log group to which log for INDEX\_SLOW\_LOGS needs to be published | `string` | `""` | no |
 | log\_publishing\_index\_enabled | Specifies whether log publishing option for INDEX\_SLOW\_LOGS is enabled or not | `bool` | `false` | no |
 | log\_publishing\_search\_cloudwatch\_log\_group\_arn | ARN of the CloudWatch log group to which log for SEARCH\_SLOW\_LOGS needs to be published | `string` | `""` | no |
-| log\_publishing\_search\_enabled | Specifies whether log publishing option for SEARCH\_SLOW\_LOGS is enabled or not | `bool` | `false` | no |
 | node\_to\_node\_encryption\_enabled | Whether to enable node-to-node encryption | `bool` | `false` | no |
 | private\_cidr\_blocks | List of allowed cidr blocks for private\_ports | `list(number)` | `[]` | no |
 | private\_ports | Open allowed port range with private cidr blocks | `list(number)` | `[]` | no |

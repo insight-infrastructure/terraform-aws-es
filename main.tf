@@ -31,14 +31,14 @@ resource "aws_elasticsearch_domain" "default" {
   }
 
   ebs_options {
-    ebs_enabled = var.ebs_volume_size > 0 ? true : false
+    ebs_enabled = var.ebs_volume_size > 0
     volume_size = var.ebs_volume_size
     volume_type = var.ebs_volume_type
     iops        = var.ebs_iops
   }
 
   encrypt_at_rest {
-    enabled    = var.encrypt_at_rest_enabled
+    enabled    = var.encrypt_at_rest_kms_key_id != ""
     kms_key_id = var.encrypt_at_rest_kms_key_id
   }
 
@@ -84,7 +84,7 @@ resource "aws_elasticsearch_domain" "default" {
   }
 
   dynamic "cognito_options" {
-    for_each = var.cognito_authentication_enabled ? [true] : []
+    for_each = var.cognito_user_pool_id != "" ? [true] : []
     content {
       enabled          = true
       user_pool_id     = var.cognito_user_pool_id
@@ -94,19 +94,19 @@ resource "aws_elasticsearch_domain" "default" {
   }
 
   log_publishing_options {
-    enabled                  = var.log_publishing_index_enabled
+    enabled                  = var.log_publishing_index_cloudwatch_log_group_arn != ""
     log_type                 = "INDEX_SLOW_LOGS"
     cloudwatch_log_group_arn = var.log_publishing_index_cloudwatch_log_group_arn
   }
 
   log_publishing_options {
-    enabled                  = var.log_publishing_search_enabled
+    enabled                  = var.log_publishing_search_cloudwatch_log_group_arn != ""
     log_type                 = "SEARCH_SLOW_LOGS"
     cloudwatch_log_group_arn = var.log_publishing_search_cloudwatch_log_group_arn
   }
 
   log_publishing_options {
-    enabled                  = var.log_publishing_application_enabled
+    enabled                  = var.log_publishing_index_cloudwatch_log_group_arn != ""
     log_type                 = "ES_APPLICATION_LOGS"
     cloudwatch_log_group_arn = var.log_publishing_application_cloudwatch_log_group_arn
   }
